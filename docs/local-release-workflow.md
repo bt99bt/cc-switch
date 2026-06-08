@@ -19,24 +19,23 @@
 建议个人 fork 使用能看出来源的版本号：
 
 ```text
-v3.16.1-bt.1
-v3.16.1-bt.2
+v3.16.2
+v3.16.3
 ```
 
 含义：
 
 - `3.16.1`：基于的上游 CC Switch 版本
-- `bt`：个人 fork 标识
-- `.1`、`.2`：个人构建序号
+- `3.16.2`、`3.16.3`：个人 fork 构建序号，使用纯数字版本以兼容 Windows MSI
 
-如果某个平台的打包或更新机制不接受带后缀的 SemVer 预发布版本，可以改用纯数字版本：
+Windows MSI 不接受 `3.16.1-bt.1` 这种带字母的预发布版本号，所以个人 fork 发版默认使用纯数字版本：
 
 ```text
 v3.16.2
 v3.16.3
 ```
 
-这种情况下，Release 说明里要写清楚“基于上游 v3.16.1 + 本地改动”。
+Release 说明里要写清楚“基于上游 v3.16.1 + 本地改动”。
 
 ## 发版前更新版本号
 
@@ -46,16 +45,16 @@ v3.16.3
 - `src-tauri/Cargo.toml`
 - `src-tauri/tauri.conf.json`
 
-例如发布 `3.16.1-bt.1` 时，三处都改成：
+例如发布 `3.16.2` 时，三处都改成：
 
 ```json
-"version": "3.16.1-bt.1"
+"version": "3.16.2"
 ```
 
 Rust/TOML 中对应为：
 
 ```toml
-version = "3.16.1-bt.1"
+version = "3.16.2"
 ```
 
 ## GitHub Actions 前置条件
@@ -113,9 +112,9 @@ git commit -m "chore: prepare local fork release"
 创建并推送版本标签：
 
 ```bash
-git tag v3.16.1-bt.1
+git tag v3.16.2
 git push origin codex/local-custom
-git push origin v3.16.1-bt.1
+git push origin v3.16.2
 ```
 
 推送标签后，GitHub Actions 会自动运行 Release workflow。
@@ -131,10 +130,10 @@ https://github.com/bt99bt/cc-switch/releases
 Release 资产命名会类似：
 
 ```text
-CC-Switch-v3.16.1-bt.1-Windows.msi
-CC-Switch-v3.16.1-bt.1-Windows-Portable.zip
-CC-Switch-v3.16.1-bt.1-macOS-arm64.dmg
-CC-Switch-v3.16.1-bt.1-macOS-arm64.zip
+CC-Switch-v3.16.2-Windows.msi
+CC-Switch-v3.16.2-Windows-Portable.zip
+CC-Switch-v3.16.2-macOS-arm64.dmg
+CC-Switch-v3.16.2-macOS-arm64.zip
 ```
 
 ## 跟上游同步后的发版
