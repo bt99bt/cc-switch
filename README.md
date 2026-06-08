@@ -23,6 +23,8 @@ This repository is a personal fork of the official CC Switch project. The offici
 
 Custom builds from this fork are published on the fork's [Releases](https://github.com/bt99bt/cc-switch/releases) page with their own version tags. These builds may include local changes that are not part of the official upstream release.
 
+Future fork releases are built only for Windows x64 and macOS Apple Silicon (arm64). The upstream project may still publish additional platforms.
+
 ## ❤️Sponsor
 
 > [Want to appear here?](mailto:farion1231@gmail.com)

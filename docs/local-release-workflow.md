@@ -9,10 +9,10 @@
 - 工作流文件：`.github/workflows/release.yml`
 - 触发方式：推送 `v*` 标签
 - 输出位置：GitHub Releases
-- 输出资产：macOS `.dmg`/`.zip`，Windows `.msi`/Portable `.zip`，Linux `.AppImage`/`.deb`/`.rpm`
+- 输出资产：Windows x64 `.msi`/Portable `.zip`，macOS Apple Silicon `.dmg`/`.zip`
 - 额外资产：`latest.json`，用于 Tauri updater
 
-也就是说，只要 fork 仓库开启 Actions，并满足签名密钥要求，推送版本标签后就会自动构建 Release。
+也就是说，只要 fork 仓库开启 Actions，并满足签名密钥要求，推送版本标签后就会自动构建 Release。后续个人 fork 只保留 Windows x64 和 macOS arm64 两个目标，当前已经触发的旧标签不受后续 workflow 提交影响。
 
 ## 版本号策略
 
@@ -133,8 +133,8 @@ Release 资产命名会类似：
 ```text
 CC-Switch-v3.16.1-bt.1-Windows.msi
 CC-Switch-v3.16.1-bt.1-Windows-Portable.zip
-CC-Switch-v3.16.1-bt.1-macOS.dmg
-CC-Switch-v3.16.1-bt.1-Linux-x86_64.AppImage
+CC-Switch-v3.16.1-bt.1-macOS-arm64.dmg
+CC-Switch-v3.16.1-bt.1-macOS-arm64.zip
 ```
 
 ## 跟上游同步后的发版

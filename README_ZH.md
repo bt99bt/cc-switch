@@ -23,6 +23,8 @@
 
 本 fork 的自定义构建会发布在 [bt99bt/cc-switch Releases](https://github.com/bt99bt/cc-switch/releases) 页面，并使用独立版本标签。这些构建可能包含尚未进入官方上游版本的本地改动。
 
+后续本 fork 的 Release 只打包 Windows x64 和 macOS Apple Silicon（arm64）。官方上游项目可能仍会发布其他平台构建。
+
 ## ❤️赞助商
 
 > [想出现在这里？](mailto:farion1231@gmail.com)
