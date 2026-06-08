@@ -17,6 +17,12 @@ English | [中文](README_ZH.md) | [日本語](README_JA.md) | [Deutsch](README_
 
 </div>
 
+## Personal Fork Builds
+
+This repository is a personal fork of the official CC Switch project. The official upstream remains [farion1231/cc-switch](https://github.com/farion1231/cc-switch) and the official website remains [ccswitch.io](https://ccswitch.io).
+
+Custom builds from this fork are published on the fork's [Releases](https://github.com/bt99bt/cc-switch/releases) page with their own version tags. These builds may include local changes that are not part of the official upstream release.
+
 ## ❤️Sponsor
 
 > [Want to appear here?](mailto:farion1231@gmail.com)

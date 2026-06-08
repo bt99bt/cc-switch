@@ -2064,22 +2064,10 @@ impl RequestForwarder {
             ProxyError::Timeout(_) => ErrorCategory::Retryable,
             ProxyError::ForwardFailed(_) => ErrorCategory::Retryable,
             ProxyError::ProviderUnhealthy(_) => ErrorCategory::Retryable,
-            // 上游 HTTP 错误：按状态码分桶。
-            //
-            // 客户端请求自身有问题的状态码无论换哪个 provider 都会被拒绝，
-            // 继续轮询只会放大错误率、污染熔断器健康度、浪费配额：
-            //   400 Bad Request / 422 Unprocessable Entity   ← 请求体格式或语义错误
-            //   405 Method Not Allowed / 406 Not Acceptable  ← 方法或 Accept 错误
-            //   413 Payload Too Large / 414 URI Too Long     ← 客户端构造超限
-            //   415 Unsupported Media Type                    ← Content-Type 错误
-            //   501 Not Implemented                           ← 上游协议确实不支持
-            //
-            // 其他 4xx（401/403/404/408/409/429/451 等）和全部 5xx 都保留
-            // Retryable —— 换一家 provider 可能持有不同的 key、配额、地域或模型映射。
-            ProxyError::UpstreamError { status, .. } => match *status {
-                400 | 405 | 406 | 413 | 414 | 415 | 422 | 501 => ErrorCategory::NonRetryable,
-                _ => ErrorCategory::Retryable,
-            },
+            // 上游 HTTP 错误全部视为 provider 失败并尝试下一家。
+            // 到这里的响应已经不是 2xx；即使是 400/422/501，下一家 provider
+            // 也可能有不同的兼容层、模型映射、额度或协议支持。
+            ProxyError::UpstreamError { .. } => ErrorCategory::Retryable,
             // Provider 级配置/转换问题：换一个 Provider 可能就能成功
             ProxyError::ConfigError(_) => ErrorCategory::Retryable,
             ProxyError::TransformError(_) => ErrorCategory::Retryable,
@@ -2621,6 +2609,24 @@ mod tests {
         assert_eq!(code, log_fwd::PROVIDER_FAILED_RETRY);
         assert!(message.contains("继续尝试下一个 (1/3)"));
         assert!(message.contains("请求超时"));
+    }
+
+    #[test]
+    fn all_upstream_http_errors_are_retryable_for_failover() {
+        let forwarder = test_forwarder(Duration::from_secs(1), Duration::from_secs(1));
+
+        for status in [400, 405, 413, 415, 422, 429, 500, 501] {
+            let error = ProxyError::UpstreamError {
+                status,
+                body: Some(format!("upstream status {status}")),
+            };
+
+            assert_eq!(
+                forwarder.categorize_proxy_error(&error),
+                ErrorCategory::Retryable,
+                "HTTP {status} should trigger failover"
+            );
+        }
     }
 
     #[test]

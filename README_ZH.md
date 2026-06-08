@@ -17,6 +17,12 @@
 
 </div>
 
+## 个人 Fork 构建说明
+
+本仓库是 CC Switch 官方项目的个人 fork。官方上游仓库仍然是 [farion1231/cc-switch](https://github.com/farion1231/cc-switch)，唯一官方网站仍然是 [ccswitch.io](https://ccswitch.io)。
+
+本 fork 的自定义构建会发布在 [bt99bt/cc-switch Releases](https://github.com/bt99bt/cc-switch/releases) 页面，并使用独立版本标签。这些构建可能包含尚未进入官方上游版本的本地改动。
+
 ## ❤️赞助商
 
 > [想出现在这里？](mailto:farion1231@gmail.com)
